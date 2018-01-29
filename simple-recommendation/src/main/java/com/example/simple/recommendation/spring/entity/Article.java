@@ -7,17 +7,21 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "ARTICLE")
+@Table(name = "ARTICLE",
+	uniqueConstraints = @UniqueConstraint(columnNames={"ARTICLE_CODE", "LANGUAGE_KEY"})
+)
 public class Article {
 
 	@Id
@@ -38,8 +42,7 @@ public class Article {
 	@Column(name = "CONTENT")
 	private String content;
 	
-	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "articles")
 	private Category category;
 	
 	@ManyToMany(cascade = CascadeType.ALL)

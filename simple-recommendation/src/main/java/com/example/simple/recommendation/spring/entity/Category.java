@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +24,8 @@ public class Category {
 	@Column(name = "TITLE")
 	private String title;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+	@ManyToOne
+	@JoinColumn(name = "ARTICLE_CODE")
 	private List<Article> articles;
 	
 	public String getTitle() {
